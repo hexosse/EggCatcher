@@ -21,7 +21,6 @@ package me.shansen.EggCatcher.listeners;
 import me.shansen.EggCatcher.EggCatcher;
 import me.shansen.EggCatcher.EggType;
 import me.shansen.EggCatcher.events.EggCaptureEvent;
-
 import me.shansen.nbt.NbtReflection;
 import org.bukkit.Effect;
 import org.bukkit.Material;
