@@ -1,5 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/shansen/EggCatcher.png)](http://travis-ci.org/shansen/EggCatcher)
-#EggCatcher
+#EggCatcher [![Build Status](https://travis-ci.org/shansen/EggCatcher.svg?branch=master)](https://travis-ci.org/shansen/EggCatcher)
 
 This plugin allows the players to get spawn eggs by throwing regular eggs at mobs. It is intended to be simple to set up and use. If you make any changes, pull requests are appreciated.
 
@@ -12,6 +11,7 @@ This plugin allows the players to get spawn eggs by throwing regular eggs at mob
 * Configurable catch chance.
 * Configurable cost (vault support, or items).
 * Explosion effects.
+
 ## Installation and requirements ##
 **Vault is not required unless you intend to use it**
 

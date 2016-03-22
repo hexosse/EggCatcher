@@ -22,6 +22,7 @@ import me.shansen.EggCatcher.EggCatcher;
 import me.shansen.EggCatcher.EggType;
 import me.shansen.EggCatcher.events.EggCaptureEvent;
 
+import me.shansen.nbt.NbtReflection;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -56,6 +57,7 @@ public class EggCatcherEntityListener implements Listener {
     private final String vaultTargetBankAccount;
     private final boolean spawnChickenOnFail;
     private final boolean spawnChickenOnSuccess;
+    private final boolean deleteVillagerInventoryOnCatch;
     FileConfiguration config;
     JavaPlugin plugin;
 
@@ -80,6 +82,7 @@ public class EggCatcherEntityListener implements Listener {
         this.spawnChickenOnFail = this.config.getBoolean("SpawnChickenOnFail", true);
         this.spawnChickenOnSuccess = this.config.getBoolean("SpawnChickenOnSuccess", false);
         this.vaultTargetBankAccount = this.config.getString("VaultTargetBankAccount", "");
+        this.deleteVillagerInventoryOnCatch = this.config.getBoolean("DeleteVillagerInventoryOnCatch", false);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -255,6 +258,8 @@ public class EggCatcherEntityListener implements Listener {
 
         ItemStack eggStack = new ItemStack(Material.MONSTER_EGG, 1, eggType.getCreatureId());
 
+        eggStack = NbtReflection.setNewEntityTag(eggStack, entity.getType().getName());
+
         String customName = ((LivingEntity) entity).getCustomName();
 
         if (customName != null) {
@@ -276,7 +281,8 @@ public class EggCatcherEntityListener implements Listener {
             }
         }
 
-        if(entity instanceof InventoryHolder){
+        if((entity instanceof Villager && !this.deleteVillagerInventoryOnCatch) ||
+                (!(entity instanceof Villager) && entity instanceof InventoryHolder)) {
 
             ItemStack[] items = ((InventoryHolder) entity).getInventory().getContents();
 

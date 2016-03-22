@@ -20,7 +20,6 @@ package me.shansen.EggCatcher;
 
 import me.shansen.EggCatcher.listeners.EggCatcherEntityListener;
 import me.shansen.EggCatcher.listeners.EggCatcherPlayerListener;
-import net.gravitydevelopment.updater.Updater;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Egg;
 import org.bukkit.plugin.PluginManager;
@@ -40,10 +39,6 @@ public class EggCatcher extends JavaPlugin {
 
     public void onEnable() {
         this.CheckConfigurationFile();
-
-        if (this.getConfig().getBoolean("CheckForUpdates")) {
-            this.CheckUpdate();
-        }
 
         PluginManager pm = this.getServer().getPluginManager();
 
@@ -67,14 +62,15 @@ public class EggCatcher extends JavaPlugin {
         }
     }
 
-    public void CheckUpdate() {
-        Updater updater = new Updater(this, 35664, this.getFile(), Updater.UpdateType.DEFAULT, false);
-    }
-
     public void CheckConfigurationFile() {
         double configVersion = this.getConfig().getDouble("ConfigVersion", 0.0);
-        if (configVersion == 2.2) {
+        if (configVersion == 2.5) {
             //
+            this.saveConfig();
+        } else if (configVersion == 2.2) {
+            this.getConfig().set("DeleteVillagerInventoryOnCatch", false);
+
+            this.getConfig().set("ConfigVersion", 2.5);
             this.saveConfig();
         } else if (configVersion == 2.0) {
             this.getConfig().set("CatchChance.Endermite", 100.0);
